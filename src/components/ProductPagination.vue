@@ -30,22 +30,29 @@ export default {
     },
     computed:{
         paginas(){
-            const current = Number(this.$route.query._page)
+            const current = Number(this.$route.query._page) // pega a página atual
             const range = 9
             const offset = Math.ceil(range / 2)
             const total = this.paginasTotal
             const pageArray = []
 
+            // Criar um array com o total de pginas que tem
             for(let i=1; i<= total; i++){
                 pageArray.push(i)
             }
+
+            // Mostra o range de páginas apartir de onde clicou menos o offset
             pageArray.splice(0, current - offset)
+            // Mostra do range até o total
+            pageArray.splice(range, total)
             return pageArray
         },
-        paginasTotal(){
-            const total = this.produtosTotal / this.produtoPorPagina
-            return (total !== Infinity) ? Math.ceil(total) : 0
-        }
+
+            // Retorna a quantidade de paginas
+            paginasTotal(){ 
+                const total = this.produtosTotal / this.produtoPorPagina
+                return (total !== Infinity) ? Math.ceil(total) : 0
+            }
     }
 }
 </script>
