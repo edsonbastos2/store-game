@@ -1,19 +1,22 @@
 <template>
     <section class="product-container">
-        <div class="produtos" v-if="products && products.length">
-            <div class="produto" v-for="product in products" :key="product.id">
-                <router-link to="/">
-                    <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].title">
-                    <p class="preco">{{product.preco}}</p>
-                    <h2 class="title">{{product.nome}}</h2>
-                    <p>{{product.descricao}}</p>
-                </router-link>
+        <transition mode="out-in">
+            <div class="produtos" v-if="products && products.length">
+                <div class="produto" v-for="(product, index) in products" :key="index">
+                    <router-link :to="{name:'produto', params: {id:product.id}}">
+                        <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].title">
+                        <p class="preco">{{getCurrency(product.preco)}}</p>
+                        <h2 class="title">{{product.nome}}</h2>
+                        <p>{{product.descricao}}</p>
+                    </router-link>
+                </div>
+                <ProductPagination :produtoPorPagina="produtoPorPagina" :produtosTotal="produtosTotal"/>
             </div>
-            <ProductPagination :produtoPorPagina="produtoPorPagina" :produtosTotal="produtosTotal"/>
-        </div>
-        <div v-else-if="products && products.length === 0">
-            <p class="notFound">Busca sem resultados. Tente buscar outro termo.</p>
-        </div>
+            <div v-else-if="products && products.length === 0">
+                <p class="notFound">Busca sem resultados. Tente buscar outro termo.</p>
+            </div>
+            <loading v-else/>
+        </transition>
     </section>
 </template>
 
@@ -21,13 +24,15 @@
 import { api } from '@/services/api.js'
 import {serialize} from '@/helpers.js'
 import ProductPagination from '@/components/ProductPagination.vue'
+import Loading from './Loading.vue'
 export default {
     components:{
-        ProductPagination
+        ProductPagination,
+        Loading
     },
     data(){
         return{
-            products:null,
+            products: null,
             produtoPorPagina: 9,
             produtosTotal: 0
         }
@@ -36,13 +41,27 @@ export default {
         url(){
             const query = serialize(this.$route.query)
             return `/produto?_limit=${this.produtoPorPagina}${query}`
+        },
+        getCurrency(){
+            return (valor) =>{
+            valor = Number(valor)
+                if(!isNaN(valor)){
+                    return valor.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL"
+                    })
+                }else{
+                    return ""
+                }
+            }
         }
     },
     methods:{
         async getProduct(){
-           const product = await api.get(this.url)
-           this.produtosTotal = Number(product.headers['x-total-count'])
-           this.products = product.data
+            this.products = null
+            const product =  await  api.get(this.url)
+            this.produtosTotal = Number(product.headers['x-total-count'])
+            this.products = product.data
         }
     },
     watch:{
