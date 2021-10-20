@@ -4,7 +4,8 @@
             <router-link to="/" class="logo">
                 <h1>Logo</h1>
             </router-link>
-            <router-link class="btn" to="/login">Vender | Login</router-link>
+            <router-link v-if="$store.state.login" class="btn" to="/usuario">{{$singleUser}}</router-link>
+            <router-link v-else class="btn" to="/login">Vender | Login</router-link>
         </nav>
     </header>
 </template>
@@ -12,7 +13,13 @@
 <script>
 
 export default {
-    name:'header'
+    name:'header',
+    computed:{
+        $singleUser(){
+            const nome = this.$store.getters.$single.nome
+            return nome.replace(/ .*/, '')
+        }
+    }
 }
 </script>
 

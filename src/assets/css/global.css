@@ -58,6 +58,10 @@ input, textarea{
     margin-bottom: 15px;
 }
 
+label{
+    margin-bottom: 5px;
+}
+
 input:focus, input:hover
 textarea:focus, textarea:hover{
     outline: none;
