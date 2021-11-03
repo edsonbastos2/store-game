@@ -2,7 +2,11 @@
   <div id="app">
     <Header/>
       <main id="main">
-        <transition mode="out-in">
+        <transition
+         mode="out-in"
+         enter-active-class="animate__animated animate__fadeInRight"
+         leave-active-class="animate__animated animate__fadeInRight"
+         >
           <router-view />
         </transition>
       </main>

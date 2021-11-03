@@ -1,6 +1,10 @@
 <template>
     <section class="product-container">
-        <transition mode="out-in">
+        <transition 
+            enter-active-class="animate__animated animate__fadeInDown"
+            leave-active-class="animate__animated animate__fadeInDown"
+            mode="out-in"
+        >
             <div class="produtos" v-if="products && products.length">
                 <div class="produto" v-for="(product, index) in products" :key="index">
                     <router-link :to="{name:'produto', params: {id:product.id}}">

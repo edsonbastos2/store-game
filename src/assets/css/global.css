@@ -62,8 +62,10 @@ label{
     margin-bottom: 5px;
 }
 
-input:focus, input:hover
-textarea:focus, textarea:hover{
+input:focus, 
+input:hover,
+textarea:focus, 
+textarea:hover{
     outline: none;
     box-shadow: 0 6px 12px rgba(30, 60, 90, .2);
     border-color: #87f;

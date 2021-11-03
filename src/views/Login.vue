@@ -11,7 +11,9 @@
         <p class="perdeu">
             <a href="/" target="_blank">Perdeu sua senha? clique aqui</a>
         </p>
-        <CreateLogin/>
+        <transition enter-active-class="animate__animated animate__fadeInDown" leave-active-class="animate__animated animate__fadeInDown">
+            <CreateLogin/>
+        </transition>
     </section>
 </template>
 
