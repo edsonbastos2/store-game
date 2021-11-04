@@ -27,7 +27,7 @@ export default createStore({
     },
 
     SET_USERS(state, payload){
-      state.users = payload
+      state.users.push(Object.assign(payload))
     },
 
     SET_USER(state, payload){
@@ -46,6 +46,12 @@ export default createStore({
     async single(context){
       const resp = await api.get(`/usuario/${context.state.user.id}`)
       context.commit('SET_USER', resp.data)
+      return resp
+    },
+
+    async userSingle(context){
+      const resp = await api.get(`/usuario/${context.state.user.id}`)
+      return resp
     },
 
     async getUsuarioProduto(context, payload){

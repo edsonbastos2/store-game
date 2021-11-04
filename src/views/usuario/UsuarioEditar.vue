@@ -1,11 +1,16 @@
 <template>
     <div>
-        <p>Editar usuário</p>
+        <h2>Editar usuário</h2>
+        <FormUserFull/>
     </div>
 </template>
 
 <script>
+import FormUserFull from '@/components/FormUserFull.vue'
 export default {
+    components:{
+        FormUserFull
+    }
     
 }
 </script>

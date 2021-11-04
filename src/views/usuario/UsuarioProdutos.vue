@@ -11,7 +11,7 @@
                 <li v-for="(produto, index) in $produtoUsuario" :key="index">
                     <ProdutoItem :produto="produto">
                         <p>{{produto.descricao}}</p>
-                        <button class="btn" @click.prevent="deletar(produto.id)">&times;</button>
+                        <button class="deleta" @click.prevent="deletar(produto.id)">&times;</button>
                     </ProdutoItem>
                 </li>
             </transition-group>
@@ -78,6 +78,26 @@ export default {
 .usuario_produto{
     h2{
         margin: 20px 0;
+    }
+
+    li{
+        
+        .deleta{
+            position: absolute;
+            top: 15px;
+            right: 50px;
+            width: 28px;
+            height:28px;
+            cursor: pointer;
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: tomato;
+            border: 2px solid tomato;
+            border-radius: 28px;
+            background-color: transparent;
+        }
     }
 }
 </style>
